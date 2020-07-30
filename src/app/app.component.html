@@ -1,0 +1,155 @@
+<div class="page-wrapper bg-dark p-t-100 p-b-50">
+  <div class="wrapper wrapper--w900">
+    <div class="card card-6">
+      <div class="card-heading">
+        <h2 class="title">Assignment</h2>
+      </div>
+      <div class="card-body">
+
+
+        <!-- Form Start -->
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+
+          <!-- Full Name HTML Property -->
+
+          <div class="form-row">
+            <div class="name">Full name</div>
+            <div class="value">
+              <input
+                id="input--style-6"
+                type="text"
+                name="full_name"
+                placeholder="Firstname Lastname"
+                formControlName="name"
+                required
+              />
+              <div *ngIf="form.get('name').hasError('pattern')" class="error">
+                FullName is invalid! (needs to contain two space separated
+                words)
+              </div>
+            </div>
+          </div>
+
+          <!-- Email address  Html Property -->
+
+          <div class="form-row">
+            <div class="name">Email address</div>
+            <div class="value">
+              <div class="input-group">
+                <input
+                  id="input--style-6"
+                  type="text"
+                  name="email"
+                  placeholder="example@email.com"
+                  formControlName="email"
+                  required
+                />
+                <div *ngIf="form.get('email').errors?.pattern" class="error">
+                  Email is invalid!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Age Html Property -->
+
+          <div class="form-row">
+            <div class="name">Age</div>
+            <div class="value">
+              <div class="input-group">
+                <input
+                  id="input--style-6"
+                  type="text"
+                  name="age"
+                  placeholder="Age"
+                  formControlName="age"
+                />
+                <div *ngIf="form.get('age').errors as yearErrors" class="error">
+                  {{ yearErrors.age }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upload Music Html Property  -->
+
+          <div class="form-row">
+            <div class="name">Upload Music file</div>
+            <div class="value">
+              <div class="input-group js-input-file">
+                <input
+                  class="input-file"
+                  type="file"
+                  (change)="readFile($event)"
+                  name="music_file"
+                  id="file"
+                  accept=".mp3,.flac,.wav"
+                  required
+                />
+                <!-- <button type="button" class="label--file" for="file" (click)="onUpload()">Choose file</button> -->
+                <label class="label--file" for="file">Choose file</label>
+                <span class="input-file__info" > {{ uploaded_file }} </span>
+              </div>
+              <div class="label--desc"></div>
+              <div class="error">{{ file_warning }}</div>
+            </div>
+          </div>
+
+          <!-- Optional task 1  -->
+
+          <div class="form-row">
+            <div class="name">Artist and song Name: </div>
+            <div class="value">
+              <div class="input-group js-input-file">
+                  <span class="name"> {{ task1_output }} </span>
+              </div>       
+              <div class="label--desc"></div>
+            </div>
+          </div>
+
+          <!-- Optional task 2 -->
+
+           <div class="form-row">
+            <div class="name">Tags</div>
+            <div class="value">   
+              <div class="input-group js-input-file">
+                <mat-form-field class="chip-list">
+                  <mat-chip-list #chipList aria-label="Fruit selection">
+                    <mat-chip *ngFor="let tag of all_tags" [selectable]="selectable"
+                            [removable]="removable" (removed)="remove(tag)">
+                      {{tag.name}}
+                      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                    </mat-chip>
+                    <input placeholder="Add Tags..."
+                          [matChipInputFor]="chipList"
+                          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                          [matChipInputAddOnBlur]="addOnBlur"
+                          (matChipInputTokenEnd)="add($event)">
+                  </mat-chip-list>
+                </mat-form-field>
+              </div>
+              <div class="label--desc"></div>
+            </div>
+          </div>
+
+
+          <!-- Summit button -->
+
+          <div class="card-footer">
+            <button class="btn btn--radius-2 btn--blue-2" type="submit" [disabled]="!form.valid">
+              Submit
+            </button>
+            <span class="name"> {{ success_submit }} </span>
+          </div>
+
+        <!-- Form end -->
+
+        </form>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
